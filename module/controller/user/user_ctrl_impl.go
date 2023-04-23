@@ -22,6 +22,20 @@ func NewUserCtrlImpl(srvuser srvUser.USerServ, validate *validator.Validate) Use
 	}
 }
 
+// @BasePath /api/v1
+
+// Register
+// @Summary Register
+// @Schemes http
+// @Description Registration
+// @Accept json
+// @Param user body modelUser.UserCreate true "user payload"
+// @Produce json
+// @Success 202 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /register [post]
 func (u_ctrl *UserCtrlImpl) Registration(ctx *gin.Context) {
 	reqIn := modelUser.UserCreate{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -80,6 +94,19 @@ func (u_ctrl *UserCtrlImpl) Registration(ctx *gin.Context) {
 	})
 
 }
+
+// @BasePath /api/v1
+// @Summary Login
+// @Schemes http
+// @Description Login
+// @Accept json
+// @Param user body modelUser.UserLogin true "user payload"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{data=token.Tokens}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /login [post]
 func (u_ctrl *UserCtrlImpl) LoginUser(ctx *gin.Context) {
 	reqIn := modelUser.UserLogin{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -106,7 +133,7 @@ func (u_ctrl *UserCtrlImpl) LoginUser(ctx *gin.Context) {
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, response.ErrorResponse{
 			Code:    http.StatusInternalServerError,
-			Message: response.InternalServer,
+			Message: response.SomethingWentWrong,
 			Error:   err.Error(),
 		})
 		return

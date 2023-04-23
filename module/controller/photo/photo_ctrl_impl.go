@@ -28,6 +28,19 @@ func NewPhotoCtrlImpl(srvPhoto srvPhoto.PhotoSrv, validate *validator.Validate) 
 	}
 }
 
+// @BasePath /api/v1
+// @Summary Insert Photo
+// @Schemes http
+// @Description Insert Photo
+// @Accept json
+// @security Bearer
+// @Param photo body modelPhoto.PhotoCreate true "photo payload"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/photo [post]
 func (p_ctrl *PhotoCtrlImpl) CtrlInsertPhoto(ctx *gin.Context) {
 	reqIn := modelPhoto.PhotoCreate{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -89,6 +102,21 @@ func (p_ctrl *PhotoCtrlImpl) CtrlInsertPhoto(ctx *gin.Context) {
 		Data:    "success created With title " + res.Title,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary Update Photo
+// @Schemes http
+// @Description Update Photo
+// @Accept json
+// @security Bearer
+// @Param photo body modelPhoto.PhotoUpdate true "photo payload"
+// @Param id path int true "idphoto"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/photo/{idphoto} [put]
 func (p_ctrl *PhotoCtrlImpl) CtrlUpdatePhoto(ctx *gin.Context) {
 	reqIn := modelPhoto.PhotoUpdate{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -171,6 +199,20 @@ func (p_ctrl *PhotoCtrlImpl) CtrlUpdatePhoto(ctx *gin.Context) {
 	})
 
 }
+
+// @BasePath /api/v1
+// @Summary Find By Id Photo
+// @Schemes http
+// @Description Find By Id Photo
+// @Accept json
+// @security Bearer
+// @Param id path int true "idphoto"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{data=modelPhoto.PhotoRes}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/photo/{idphoto} [get]
 func (p_ctrl *PhotoCtrlImpl) CtrlFindByIdPhoto(ctx *gin.Context) {
 	id, err := p_ctrl.getIdFromParam(ctx)
 	if err != nil {
@@ -195,6 +237,19 @@ func (p_ctrl *PhotoCtrlImpl) CtrlFindByIdPhoto(ctx *gin.Context) {
 		Data:    res,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary Find By All Photo
+// @Schemes http
+// @Description Find All Photo
+// @Accept json
+// @security Bearer
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{data=[]modelPhoto.PhotoRes}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/photo [get]
 func (p_ctrl *PhotoCtrlImpl) CtrlFindAllPhoto(ctx *gin.Context) {
 	res, err := p_ctrl.SrvPhoto.SrvFindAllPhoto(ctx)
 	if err != nil {
@@ -210,6 +265,20 @@ func (p_ctrl *PhotoCtrlImpl) CtrlFindAllPhoto(ctx *gin.Context) {
 		Data:    res,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary delete Photo
+// @Schemes http
+// @Description delete Photo
+// @Accept json
+// @security Bearer
+// @Param id path int true "idphoto"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/photo/{idphoto} [delete]
 func (p_ctrl *PhotoCtrlImpl) CtrlDeletePhoto(ctx *gin.Context) {
 	idphoto, err := p_ctrl.getIdFromParam(ctx)
 	if err != nil {

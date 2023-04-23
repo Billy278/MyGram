@@ -28,6 +28,19 @@ func NewCommentCtrlImpl(srvComment srvComment.CommentSrv, validate *validator.Va
 	}
 }
 
+// @BasePath /api/v1
+// @Summary Insert Comment
+// @Schemes http
+// @Description Insert Comment
+// @Accept json
+// @security Bearer
+// @Param Comment body modelComment.CommentCreate true "Comment payload"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/comment [post]
 func (c_ctrl *CommentCtrlImpl) CtrlInsertComment(ctx *gin.Context) {
 	reqIn := modelComment.CommentCreate{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -89,6 +102,21 @@ func (c_ctrl *CommentCtrlImpl) CtrlInsertComment(ctx *gin.Context) {
 		Data:    "success created With  Message" + res.Message,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary Update Comment
+// @Schemes http
+// @Description Update Comment
+// @Accept json
+// @security Bearer
+// @Param Comment body modelComment.CommentUpdate true "Comment payload"
+// @Param id path int true "idComment"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/comment/{idComment} [put]
 func (c_ctrl *CommentCtrlImpl) CtrlUpdateComment(ctx *gin.Context) {
 	reqIn := modelComment.CommentUpdate{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -167,6 +195,20 @@ func (c_ctrl *CommentCtrlImpl) CtrlUpdateComment(ctx *gin.Context) {
 		Data:    "success Updated With Message  " + res.Message,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary Find by Id Comment
+// @Schemes http
+// @Description Find by Id Comment
+// @Accept json
+// @security Bearer
+// @Param id path int true "idComment"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{data=modelComment.CommentRes}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/comment/{idComment} [get]
 func (c_ctrl *CommentCtrlImpl) CtrlFindByIdComment(ctx *gin.Context) {
 	id, err := c_ctrl.getIdFromParam(ctx)
 	if err != nil {
@@ -191,6 +233,19 @@ func (c_ctrl *CommentCtrlImpl) CtrlFindByIdComment(ctx *gin.Context) {
 		Data:    res,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary Find All Comment
+// @Schemes http
+// @Description Find All Comment
+// @Accept json
+// @security Bearer
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{data=[]modelComment.CommentRes}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/comment [get]
 func (c_ctrl *CommentCtrlImpl) CtrlFindAllComment(ctx *gin.Context) {
 	res, err := c_ctrl.SrvComment.SrvFindAllComment(ctx)
 	if err != nil {
@@ -206,6 +261,20 @@ func (c_ctrl *CommentCtrlImpl) CtrlFindAllComment(ctx *gin.Context) {
 		Data:    res,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary Delete Comment
+// @Schemes http
+// @Description Delete Comment
+// @Accept json
+// @security Bearer
+// @Param id path int true "idComment"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/comment/{idComment} [delete]
 func (c_ctrl *CommentCtrlImpl) CtrlDeleteComment(ctx *gin.Context) {
 	idComment, err := c_ctrl.getIdFromParam(ctx)
 	if err != nil {

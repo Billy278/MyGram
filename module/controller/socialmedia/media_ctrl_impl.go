@@ -27,6 +27,20 @@ func NewMediaCtrlImpl(srvMedia srvMedia.SocialMediaSrv, validate *validator.Vali
 		Validate: validate,
 	}
 }
+
+// @BasePath /api/v1
+// @Summary Insert Media
+// @Schemes http
+// @Description Insert Social Media
+// @Accept json
+// @security Bearer
+// @Param media body modelMedia.SocialMediaCreate true "media payload"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/media [post]
 func (m_ctrl *MediaCtrlImpl) CtlInsertMedia(ctx *gin.Context) {
 	reqIn := modelMedia.SocialMediaCreate{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -89,6 +103,21 @@ func (m_ctrl *MediaCtrlImpl) CtlInsertMedia(ctx *gin.Context) {
 	})
 
 }
+
+// @BasePath /api/v1
+// @Summary Update Media
+// @Schemes http
+// @Description Update Social Media
+// @Accept json
+// @security Bearer
+// @Param media body modelMedia.SocialMediaUpdate true "media payload"
+// @Param id path int true "idMedia"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/media/{idMedia} [put]
 func (m_ctrl *MediaCtrlImpl) CtlUpdateMedia(ctx *gin.Context) {
 	reqIn := modelMedia.SocialMediaUpdate{}
 	if err := ctx.ShouldBindJSON(&reqIn); err != nil {
@@ -168,6 +197,20 @@ func (m_ctrl *MediaCtrlImpl) CtlUpdateMedia(ctx *gin.Context) {
 		Data:    "success Updated With  " + res.Name,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary FindBy Id Media
+// @Schemes http
+// @Description FindBy Id  Social Media
+// @Accept json
+// @security Bearer
+// @Param id path int true "idMedia"
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{data=modelMedia.SocialMediaRes}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/media/{idMedia} [get]
 func (m_ctrl *MediaCtrlImpl) CtlFindByIdMedia(ctx *gin.Context) {
 	id, err := m_ctrl.getIdFromParam(ctx)
 	if err != nil {
@@ -192,6 +235,19 @@ func (m_ctrl *MediaCtrlImpl) CtlFindByIdMedia(ctx *gin.Context) {
 		Data:    res,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary FindAll  Media
+// @Schemes http
+// @Description FindAll  Social Media
+// @Accept json
+// @security Bearer
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{data=[]modelMedia.SocialMediaRes}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/media [get]
 func (m_ctrl *MediaCtrlImpl) CtlFindAllMedia(ctx *gin.Context) {
 	res, err := m_ctrl.SrvMedia.SrvFindAllMedia(ctx)
 	if err != nil {
@@ -207,6 +263,20 @@ func (m_ctrl *MediaCtrlImpl) CtlFindAllMedia(ctx *gin.Context) {
 		Data:    res,
 	})
 }
+
+// @BasePath /api/v1
+// @Summary Delete  Media
+// @Schemes http
+// @Description Delete  Social Media
+// @Accept json
+// @Param id path int true "idMedia"
+// @security Bearer
+// @Produce json
+// @Success 200 {object} response.SuccessResponse{}
+// @Failure 400 {object} response.ErrorResponse{}
+// @Failure 422 {object} response.ErrorResponse{}
+// @Failure 500 {object} response.ErrorResponse{}
+// @Router /user/media/{idMedia} [delete]
 func (m_ctrl *MediaCtrlImpl) CtlDeleteMedia(ctx *gin.Context) {
 	idMedia, err := m_ctrl.getIdFromParam(ctx)
 	if err != nil {

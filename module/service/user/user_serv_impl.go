@@ -63,6 +63,7 @@ func (u_serv *USerServImpl) SrvLoginUsername(ctx context.Context, username strin
 	err = cripto.CompareHash(userRes.Password, password)
 	if err != nil {
 		log.Printf("[ERROR] PASSWORD IS VAILED  :%v\n", err)
+		err = errors.New("PASSWORD SALAH")
 		return
 	}
 	//create token
